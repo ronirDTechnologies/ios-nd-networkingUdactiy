@@ -15,6 +15,12 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var loginViaWebsiteButton: UIButton!
     
+    func getTokenHelper(success: Bool, error: Error?) -> Void {
+        if success {
+            print(TMDBClient.Auth.requestToken)
+        }
+        
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -23,7 +29,7 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginTapped(_ sender: UIButton) {
-        performSegue(withIdentifier: "completeLogin", sender: nil)
+       TMDBClient.getRequestToken(completion: getTokenHelper(success:error:))
     }
     
     @IBAction func loginViaWebsiteTapped() {
