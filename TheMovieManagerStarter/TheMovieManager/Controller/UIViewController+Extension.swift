@@ -11,7 +11,9 @@ import UIKit
 extension UIViewController {
     
     @IBAction func logoutTapped(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
+       DispatchQueue.main.async { TMDBClient.logOut {
+           self.dismiss(animated: true, completion: nil)
+        }}
     }
     
 }
