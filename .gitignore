@@ -43,3 +43,19 @@ TheMovieManagerStarter/TheMovieManager/Model/TMDB Client/._TMDBClient.swift
 TheMovieManagerStarter/TheMovieManager/Model/TMDB Client/._TMDBTypes.swift
 TheMovieManagerStarter/TheMovieManager/Model/TMDB Requests/._LoginRequest.swift
 TheMovieManagerStarter/TheMovieManager/Model/TMDB Responses/._RequestTokenResponse.swift
+*.xcworkspace
+*.xcworkspace
+TheMovieManagerStarter/TheMovieManager/Controller/._LoginViewController.swift
+TheMovieManagerStarter/TheMovieManager/Model/TMDB Responses/._SessionResponse.swift
+TheMovieManagerStarter/TheMovieManager/Model/TMDB Responses/._TMDBResponse.swift
+TheMovieManagerStarter/TheMovieManager/Model/TMDB Responses/._RequestTokenResponse.swift
+TheMovieManagerStarter/TheMovieManager/Model/TMDB Requests/._PostSession.swift
+TheMovieManagerStarter/TheMovieManager/Model/TMDB Requests/._LogoutRequest.swift
+TheMovieManagerStarter/._TheMovieManager.xcodeproj
+TheMovieManagerStarter/TheMovieManager/Controller/._LoginViewController.swift
+TheMovieManagerStarter/TheMovieManager/Controller/._UIViewController+Extension.swift
+TheMovieManagerStarter/TheMovieManager/Model/TMDB Client/._TMDBClient.swift
+TheMovieManagerStarter/TheMovieManager/Model/TMDB Client/._TMDBTypes.swift
+TheMovieManagerStarter/TheMovieManager/Model/TMDB Requests/._LoginRequest.swift
+TheMovieManagerStarter/TheMovieManager/Model/TMDB Requests/._LogoutRequest.swift
+TheMovieManagerStarter/TheMovieManager/Model/TMDB Responses/._RequestTokenResponse.swift
