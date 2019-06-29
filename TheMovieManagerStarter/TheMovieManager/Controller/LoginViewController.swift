@@ -18,8 +18,22 @@ class LoginViewController: UIViewController {
     func getTokenHelper(success: Bool, error: Error?) -> Void {
         if success {
             print(TMDBClient.Auth.requestToken)
+            DispatchQueue.main.async {
+                TMDBClient.login(userName: self.emailTextField.text ?? "", password: self.passwordTextField.text ?? "", completion: self.handleLoginResponse(succes:Error:))
+            }
+            TMDBClient.getRequestSessionId(completion: handleSessionResponse(success:error:))
         }
         
+    }
+    func handleSessionResponse(success: Bool, error: Error?){
+        if success{
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "completeLogin", sender: nil)
+            }
+        }
+    }
+    func handleLoginResponse(succes: Bool, Error: Error?){
+        print(TMDBClient.Auth.requestToken)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -33,7 +47,13 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginViaWebsiteTapped() {
-        performSegue(withIdentifier: "completeLogin", sender: nil)
+        TMDBClient.getRequestToken{ (success,error) in
+            if success{
+                DispatchQueue.main.async {
+                  UIApplication.shared.open(TMDBClient.Endpoints.webAuth.url, options: [:], completionHandler: nil)
+                    self.performSegue(withIdentifier: "completeLogin", sender: nil)
+                }
+            }
+        }
     }
-    
 }
