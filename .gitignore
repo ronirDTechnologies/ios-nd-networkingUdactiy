@@ -59,3 +59,4 @@ TheMovieManagerStarter/TheMovieManager/Model/TMDB Client/._TMDBTypes.swift
 TheMovieManagerStarter/TheMovieManager/Model/TMDB Requests/._LoginRequest.swift
 TheMovieManagerStarter/TheMovieManager/Model/TMDB Requests/._LogoutRequest.swift
 TheMovieManagerStarter/TheMovieManager/Model/TMDB Responses/._RequestTokenResponse.swift
+TheMovieManagerStarter/TheMovieManager/Model/TMDB Requests/._PostSession.swift
