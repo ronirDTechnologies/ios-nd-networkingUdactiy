@@ -30,16 +30,18 @@ class TMDBClient {
         case webAuth
         case logOut
         case getFavorites
+        case search(String)
         
         var stringValue: String {
             switch self {
             case .getWatchlist: return Endpoints.base + "/account/\(Auth.accountId)/watchlist/movies" + Endpoints.apiKeyParam + "&session_id=\(Auth.sessionId)"
-            case .getFavorites: return Endpoints.base + "/account/\(Auth.accountId)/movie/favorites" + Endpoints.apiKeyParam + "&session_id=\(Auth.sessionId)"
+            case .getFavorites: return Endpoints.base + "/account/\(Auth.accountId)/favorite/movies" + Endpoints.apiKeyParam + "&session_id=\(Auth.sessionId)"
             case .getRequestToken: return Endpoints.base + "/authentication/token/new" + Endpoints.apiKeyParam
             case .createSessionId: return Endpoints.base + "/authentication/session/new" + Endpoints.apiKeyParam
             case .login: return Endpoints.base + "/authentication/token/validate_with_login" + Endpoints.apiKeyParam
             case .webAuth: return "https://www.themoviedb.org/authenticate/" + Auth.requestToken + "?redirect_to=themoviemanager:authenticate"
             case .logOut: return Endpoints.base + "/authenticate/session" + Endpoints.apiKeyParam
+            case .search(let query): return Endpoints.base + "/search/movie" + Endpoints.apiKeyParam + "&query=\(query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
             
             }
         }
@@ -66,7 +68,18 @@ class TMDBClient {
             }
         }
         
-    
+    class func search(query:String, completion: @escaping ([Movie], Error?) -> Void){
+        taskForGETRequest(url: Endpoints.search(query).url
+        , responseType: MovieResults.self) {(response, error) in
+            if let response = response {
+                completion(response.results, nil)
+            }
+            else{
+                completion([], error)
+            }
+        }
+        
+    }
     class func getWatchlist(completion: @escaping ([Movie], Error?) -> Void) {
         // Refactored version of Network request
         taskForGETRequest(url: Endpoints.getWatchlist.url, responseType: MovieResults.self) {
