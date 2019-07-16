@@ -31,6 +31,7 @@ class TMDBClient {
         case logOut
         case getFavorites
         case search(String)
+        case markWatchList
         
         var stringValue: String {
             switch self {
@@ -42,12 +43,29 @@ class TMDBClient {
             case .webAuth: return "https://www.themoviedb.org/authenticate/" + Auth.requestToken + "?redirect_to=themoviemanager:authenticate"
             case .logOut: return Endpoints.base + "/authenticate/session" + Endpoints.apiKeyParam
             case .search(let query): return Endpoints.base + "/search/movie" + Endpoints.apiKeyParam + "&query=\(query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
+            case.markWatchList: return Endpoints.base + "/account/\(Auth.accountId)/watchlist" + Endpoints.apiKeyParam
+                
             
             }
         }
         
         var url: URL {
             return URL(string: stringValue)!
+        }
+    }
+    
+    class func markWatchlist(movieId: Int, watchlist: Bool, completion: @escaping (Bool, Error?) -> Void){
+        
+        // 1. Set Body
+        let body = MarkWatchList(mediaType: "movie", mediaId: movieId, watchlist: watchlist)
+        taskForPOSTRequest(url: Endpoints.markWatchList.url, responseType: TMDBResponse.self, body: body){(response,error) in
+            if let response = response{
+                completion(response.statusCode == 1 || response.statusCode == 12 || response.statusCode == 13, nil)
+            }
+            else{
+                completion(false, error)
+            }
+            print("MEDIA TYPE ==> MOVIE , MEDIA ID ==> \(movieId), WATCH LIST FLAG ==> \(watchlist)")
         }
     }
     class func getFavorites(completion: @escaping ([Movie], Error?) -> Void){
@@ -216,6 +234,7 @@ class TMDBClient {
         taskForPOSTRequest(url: Endpoints.createSessionId.url, responseType: SessionResponse.self, body: postSession) {(response,error) in
             if let response = response{
                 Auth.sessionId = response.sessionId
+                print("SESSION ID =====> : \(Auth.sessionId)")
                 DispatchQueue.main.async {
                     completion(true,nil)
                 }
